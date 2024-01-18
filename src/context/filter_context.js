@@ -11,7 +11,6 @@ import {
   CLEAR_FILTERS,
 } from "../actions";
 import { useProductsContext } from "./products_context";
-import { products_url } from "../utils/constants";
 
 const initialState = {
   filtered_products: [],
@@ -21,8 +20,8 @@ const initialState = {
   filters: {
     text: "",
     company: "all",
-    category: "all",
     color: "all",
+    category: "all",
     min_price: 0,
     max_price: 0,
     price: 0,
@@ -48,13 +47,16 @@ export const FilterProvider = ({ children }) => {
   const setGridView = () => {
     dispatch({ type: SET_GRIDVIEW });
   };
+
   const setListView = () => {
     dispatch({ type: SET_LISTVIEW });
   };
+
   const updateSort = (e) => {
     const value = e.target.value;
     dispatch({ type: UPDATE_SORT, payload: value });
   };
+
   const updateFilters = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -70,10 +72,9 @@ export const FilterProvider = ({ children }) => {
     if (name === "shipping") {
       value = e.target.checked;
     }
-    dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
+    dispatch({ type: UPDATE_FILTERS, payload: { value, name } });
   };
-
-  const clearFilters = (e) => {
+  const clearFilters = () => {
     dispatch({ type: CLEAR_FILTERS });
   };
 

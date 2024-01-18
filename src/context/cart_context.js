@@ -6,6 +6,7 @@ import {
   TOGGLE_CART_ITEM_AMOUNT,
   CLEAR_CART,
   COUNT_CART_TOTALS,
+  CLEAR_FILTERS,
 } from "../actions";
 
 const getLocalStorage = () => {
@@ -13,7 +14,7 @@ const getLocalStorage = () => {
   if (cart) {
     return JSON.parse(localStorage.getItem("cart"));
   } else {
-    return {};
+    return [];
   }
 };
 
@@ -49,10 +50,11 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: CLEAR_CART });
   };
 
-  useEffect(() => {
-    dispatch({ type: COUNT_CART_TOTALS });
-    localStorage.setItem("cart", JSON.stringify(state.cart));
-  }, [state.cart]);
+  // useEffect(() => {
+  //   dispatch({ type: COUNT_CART_TOTALS });
+  //   localStorage.setItem("cart", JSON.stringify(state.cart));
+  // }, [state.cart]);
+
   return (
     <CartContext.Provider
       value={{ ...state, addToCart, removeItem, toggleAmount, clearCart }}

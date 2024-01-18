@@ -1,7 +1,8 @@
 import {
   ADD_TO_CART,
   CLEAR_CART,
-  COUNT_CART_TOTALS,
+  // CLEAR_FILTERS,
+  // COUNT_CART_TOTALS,
   REMOVE_CART_ITEM,
   TOGGLE_CART_ITEM_AMOUNT,
 } from "../actions";
@@ -10,7 +11,6 @@ const cart_reducer = (state, action) => {
   if (action.type === ADD_TO_CART) {
     const { id, color, amount, product } = action.payload;
     const tempItem = state.cart.find((i) => i.id === id + color);
-    // checking if the item already existing in the cart
     if (tempItem) {
       const tempCart = state.cart.map((cartItem) => {
         if (cartItem.id === id + color) {
@@ -23,9 +23,7 @@ const cart_reducer = (state, action) => {
           return cartItem;
         }
       });
-
       return { ...state, cart: tempCart };
-      // adding /creating new item in the cart
     } else {
       const newItem = {
         id: id + color,
@@ -39,9 +37,10 @@ const cart_reducer = (state, action) => {
       return { ...state, cart: [...state.cart, newItem] };
     }
   }
-
   if (action.type === REMOVE_CART_ITEM) {
-    const tempCart = state.cart.filter((item) => item.id !== action.payload);
+    const tempCart = state.cart.filter((item) => {
+      return item.id !== action.payload;
+    });
     return { ...state, cart: tempCart };
   }
 
@@ -51,6 +50,7 @@ const cart_reducer = (state, action) => {
 
   if (action.type === TOGGLE_CART_ITEM_AMOUNT) {
     const { id, value } = action.payload;
+
     const tempCart = state.cart.map((item) => {
       if (item.id === id) {
         if (value === "inc") {
@@ -67,28 +67,24 @@ const cart_reducer = (state, action) => {
           }
           return { ...item, amount: newAmount };
         }
-      } else {
-        return item;
       }
+      return item;
     });
     return { ...state, cart: tempCart };
   }
-
-  if (action.type === COUNT_CART_TOTALS) {
-    const { total_items, total_amount } = state.cart.reduce(
-      (total, cartItem) => {
-        const { amount, price } = cartItem;
-        total.total_items += amount;
-        total.total_amount += price * amount;
-        return total;
-      },
-      {
-        total_items: 0,
-        total_amount: 0,
-      }
-    );
-    return { ...state, total_items, total_amount };
-  }
+  // if (action.type === COUNT_CART_TOTALS) {
+  //   console.log(state.cart);
+  //   const { total_items, total_amount } = state.cart.reduce(
+  //     (total, cartItem) => {
+  //       const { amount, price } = cartItem;
+  //       total.total_items += amount;
+  //       total.total_amount += price * amount;
+  //       return total;
+  //     },
+  //     { total_items: 0, total_amount: 0 }
+  //   );
+  //   return { ...state, total_items, total_amount };
+  // }
 
   throw new Error(`No Matching "${action.type}" - action type`);
 };

@@ -8,7 +8,7 @@ const AuthWrapper = ({ children }) => {
   if (isLoading) {
     return (
       <Wrapper>
-        <h1>Loading</h1>
+        <h1>loading...</h1>
       </Wrapper>
     );
   }
@@ -19,7 +19,6 @@ const AuthWrapper = ({ children }) => {
       </Wrapper>
     );
   }
-
   return <>{children}</>;
 };
 

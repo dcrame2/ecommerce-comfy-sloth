@@ -1,4 +1,3 @@
-import { GiTyre } from "react-icons/gi";
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -17,11 +16,9 @@ const products_reducer = (state, action) => {
   if (action.type === SIDEBAR_CLOSE) {
     return { ...state, isSidebarOpen: false };
   }
-
   if (action.type === GET_PRODUCTS_BEGIN) {
     return { ...state, products_loading: true };
   }
-
   if (action.type === GET_PRODUCTS_SUCCESS) {
     const featured_products = action.payload.filter(
       (product) => product.featured === true
@@ -36,7 +33,6 @@ const products_reducer = (state, action) => {
   if (action.type === GET_PRODUCTS_ERROR) {
     return { ...state, products_loading: false, products_error: true };
   }
-
   if (action.type === GET_SINGLE_PRODUCT_BEGIN) {
     return {
       ...state,
@@ -58,7 +54,6 @@ const products_reducer = (state, action) => {
       single_product_error: true,
     };
   }
-  // return state;
   throw new Error(`No Matching "${action.type}" - action type`);
 };
 
